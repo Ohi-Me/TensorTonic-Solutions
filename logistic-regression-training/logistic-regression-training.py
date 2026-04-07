@@ -38,7 +38,7 @@ def train_logistic_regression(X, y, lr=0.1, steps=1000):
         LoggLoss = -(y*np.log(sigZ) + (1-y)*np.log(1-sigZ)).mean()
 
         err = sigZ - y
-        dw = (X.T @ err)/N
+        dw = (np.transpose(X) @ err)/N
         db = np.mean(err)
 
         w = w - lr*dw
