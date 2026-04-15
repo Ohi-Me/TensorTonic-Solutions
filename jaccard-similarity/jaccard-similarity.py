@@ -4,7 +4,7 @@ def jaccard_similarity(set_a, set_b):
     """
     # Write code here
     a = list(set(set_a))
-    b = list(set(set_b))
+    b = set(set(set_b))
     both=0
     n=len(a)
     m=len(b)
