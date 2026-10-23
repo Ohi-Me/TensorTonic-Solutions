@@ -1,25 +1,15 @@
-import numpy as np
-
-def conv2d(image, kernel, stride=1, padding=0):
-    im = np.asarray(image)
-    ke = np.asarray(kernel)
-
-    H, W = im.shape
-    kH, kW = ke.shape
-
-    # padding
-    if padding > 0:
-        im = np.pad(im, ((padding, padding), (padding, padding)), mode='constant')
-
-    # output size
-    H_out = (H + 2*padding - kH)//stride + 1
-    W_out = (W + 2*padding - kW)//stride + 1
-
-    output = np.zeros((H_out, W_out))
-
-    # convolution
-    for i in range(H_out):
-        for j in range(W_out):
-            output[i][j] = np.sum(im[i*stride:i*stride+kH, j*stride:j*stride+kW] * ke)
-
-    return output.tolist()
+def conv2d(image: list, kernel: list, stride: int = 1, padding: int = 0) -> list:
+    h,w=len(image),len(image[0])
+    kh,kw=len(kernel),len(kernel[0])
+    oh=(h+2*padding-kh)//stride+1
+    ow=(w+2*padding-kw)//stride+1
+    res=[[0]*ow for _ in range(oh)]
+    for i in range(oh):
+        for j in range(ow):
+            for a in range(kh):
+                for b in range(kw):
+                    x=i*stride+a-padding
+                    y=j*stride+b-padding
+                    if 0<=x<h and 0<=y<w:
+                        res[i][j]+=image[x][y]*kernel[a][b]
+    return res
